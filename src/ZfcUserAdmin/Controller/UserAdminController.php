@@ -3,8 +3,8 @@
 namespace ZfcUserAdmin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Paginator;
-use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Paginator\Adapter\ArrayAdapter;
+use Zend\Paginator\Paginator;
 use ZfcUser\Mapper\UserInterface;
 use ZfcUser\Options\ModuleOptions as ZfcUserModuleOptions;
 use ZfcUserAdmin\Options\ModuleOptions;
@@ -23,30 +23,41 @@ class UserAdminController extends AbstractActionController
         $userMapper = $this->getUserMapper();
         $users = $userMapper->findAll();
         if (is_array($users)) {
-            $paginator = new Paginator\Paginator(new Paginator\Adapter\ArrayAdapter($users));
+            $paginator = new Paginator(new ArrayAdapter($users));
         } else {
             $paginator = $users;
         }
 
         $paginator->setItemCountPerPage(100);
         $paginator->setCurrentPageNumber($this->getEvent()->getRouteMatch()->getParam('p'));
+
+        // Must use the FormElementManager to support custom FormElements
+        $formElementManager = $this->getServiceLocator()->get('FormElementManager');
+        /** @var $table \ZfcUserAdmin\Table\UserList */
+        $table = $formElementManager->get('ZfcUserAdmin\Table\UserList');
+
+        // For rows that key to the ID, indicate which column provides that ID
+        $table->setIdField('id');
+        // Bind users to table
+        $table->bind($paginator);
+
         return array(
-            'users' => $paginator,
-            'userlistElements' => $this->getOptions()->getUserListElements()
+            'table' => $table
         );
     }
 
     public function createAction()
     {
+        // Must use the FormElementManager to support custom FormElements
+        $formElementManager = $this->getServiceLocator()->get('FormElementManager');
         /** @var $form \ZfcUserAdmin\Form\CreateUser */
-        $form = $this->getServiceLocator()->get('zfcuseradmin_createuser_form');
+        $form = $formElementManager->get('zfcuseradmin_createuser_form');
+
         /** @var $request \Zend\Http\Request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $zfcUserOptions = $this->getZfcUserOptions();
-            $class = $zfcUserOptions->getUserEntityClass();
-            $user = new $class();
+            $user = $this->getUserMapper()->create();
             $form->bind($user);
 
             $form->setData($request->getPost());
@@ -67,8 +78,11 @@ class UserAdminController extends AbstractActionController
 
     public function editAction()
     {
+        // Must use the FormElementManager to support custom FormElements
+        $formElementManager = $this->getServiceLocator()->get('FormElementManager');
         /** @var $form \ZfcUserAdmin\Form\EditUser */
-        $form = $this->getServiceLocator()->get('zfcuseradmin_edituser_form');
+        $form = $formElementManager->get('zfcuseradmin_edituser_form');
+
         /** @var $request \Zend\Http\Request */
         $request = $this->getRequest();
 

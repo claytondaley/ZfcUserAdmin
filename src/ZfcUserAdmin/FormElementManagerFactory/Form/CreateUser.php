@@ -6,22 +6,29 @@
  * Time: 1:06 PM
  */
 
-namespace ZfcUserAdmin\Factory\Form;
+namespace ZfcUserAdmin\FormElementManagerFactory\Form;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfcUser\Form\RegisterFilter;
 use ZfcUser\Validator\NoRecordExists;
-use ZfcUserAdmin\Form\CreateUser;
+use ZfcUserAdmin\Form;
 
-class CreateUserFactory implements FactoryInterface {
+class CreateUser implements FactoryInterface {
 
-    function createService(ServiceLocatorInterface $serviceLocator) {
+    function createService(ServiceLocatorInterface $formElementManager) {
+        $serviceLocator = $formElementManager->getServiceLocator();
+
         /** @var $zfcUserOptions \ZfcUser\Options\UserServiceOptionsInterface */
         $zfcUserOptions = $serviceLocator->get('zfcuser_module_options');
         /** @var $zfcUserAdminOptions \ZfcUserAdmin\Options\ModuleOptions */
         $zfcUserAdminOptions = $serviceLocator->get('zfcuseradmin_module_options');
-        $form = new CreateUser(null, $zfcUserAdminOptions, $zfcUserOptions, $serviceLocator);
+        $form = new Form\CreateUser(null, $zfcUserAdminOptions, $zfcUserOptions, $serviceLocator);
+        // Inject the FormElementManager to support custom FormElements
+        $form->getFormFactory()->setFormElementManager($formElementManager);
+
+        $form->setHydrator($serviceLocator->get('zfcuser_user_hydrator'));
+
         $filter = new RegisterFilter(
             new NoRecordExists(array(
                 'mapper' => $serviceLocator->get('zfcuser_user_mapper'),

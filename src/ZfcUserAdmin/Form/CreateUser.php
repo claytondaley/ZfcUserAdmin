@@ -2,7 +2,6 @@
 
 namespace ZfcUserAdmin\Form;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
 use ZfcUser\Options\RegistrationOptionsInterface;
 use ZfcUser\Form\Register as Register;
 use ZfcUserAdmin\Options\UserCreateOptionsInterface;
@@ -10,25 +9,24 @@ use ZfcUserAdmin\Options\UserCreateOptionsInterface;
 class CreateUser extends Register
 {
     /**
-     * @var RegistrationOptionsInterface
-     */
-    protected $createOptionsOptions;
-
-    protected $serviceManager;
-    /**
      * @var UserCreateOptionsInterface
      */
     protected $createOptions;
+
+    protected $serviceManager;
 
     public function __construct($name = null, UserCreateOptionsInterface $createOptions, RegistrationOptionsInterface $registerOptions, $serviceManager)
     {
         $this->setCreateOptions($createOptions);
         $this->setServiceManager($serviceManager);
         parent::__construct($name, $registerOptions);
-        // ZfcUser should have setHydrator() which we replace or extend
-        $this->setHydrator($serviceManager->get('zfcuser_user_hydrator'));
+    }
 
-        if ($createOptions->getCreateUserAutoPassword()) {
+    public function init()
+    {
+        parent::init();
+
+        if ($this->getCreateOptions()->getCreateUserAutoPassword()) {
             $this->remove('password');
             $this->remove('passwordVerify');
         }
@@ -48,7 +46,7 @@ class CreateUser extends Register
             ));
         }
 
-        $this->get('submit')->setAttribute('label', 'Create');
+        $this->get('submit')->setLabel('Create');
     }
 
     public function setCreateOptions(UserCreateOptionsInterface $createOptionsOptions)

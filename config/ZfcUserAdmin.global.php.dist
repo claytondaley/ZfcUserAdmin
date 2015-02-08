@@ -20,6 +20,17 @@ $settings = array(
      * ZfcUserAdmin\Mapper\UserZendDb
      */
     'user_mapper' => 'ZfcUserAdmin\Mapper\UserDoctrine',
+
+    /**
+     * Array of data to show in the user list
+     * Key = Label in the list
+     * Value = entity property(expecting a 'getProperty())
+     */
+    'user_list_elements' => array(
+        'Username' => 'username',
+        'Full Name' => 'display_name',
+        'Email' => 'email',
+    ),
 );
 
 /**

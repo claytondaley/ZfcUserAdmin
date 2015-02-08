@@ -1,15 +1,45 @@
 <?php
+
 return array(
     'view_manager' => array(
         'template_path_stack' => array(
-            'zfcuseradmin' => __DIR__ . '/../view',
+            'zfcuseradmin'      => __DIR__ . '/../view',
         ),
     ),
+
+    'form_elements' => array(
+        'invokables' => array(
+            'keyedcollection'   => 'Zend\Table\KeyedCollection',
+            'table'             => 'Zend\Table\Table',
+            'link'              => 'Zend\Table\Element\Link',
+        ),
+        'factories' => array(
+            'zfcuseradmin_createuser_form'      => 'ZfcUserAdmin\FormElementManagerFactory\Form\CreateUser',
+            'zfcuseradmin_edituser_form'        => 'ZfcUserAdmin\FormElementManagerFactory\Form\EditUser',
+            'ZfcUserAdmin\Table\UserList'       => 'ZfcUserAdmin\FormElementManagerFactory\Table\UserList',
+        )
+    ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'formlink'          => 'Zend\Table\View\Helper\FormLink',
+            'formspan'          => 'Zend\Table\View\Helper\FormSpan',
+            'table'             => 'Zend\Table\View\Helper\Table',
+            'tableHeaderCell'   => 'Zend\Table\View\Helper\TableHeaderCell',
+            'tableHeaderRow'    => 'Zend\Table\View\Helper\TableHeaderRow',
+            'tableStaticCell'   => 'Zend\Table\View\Helper\TableStaticCell',
+            'tableStaticRow'    => 'Zend\Table\View\Helper\TableStaticRow',
+        ),
+        'factories' => array(
+            'form_element'      => 'ZfcUserAdmin\Factory\Form\LinkSupportFormElement',
+        ),
+    ),
+
     'controllers' => array(
         'invokables' => array(
-            'zfcuseradmin' => 'ZfcUserAdmin\Controller\UserAdminController',
+            'zfcuseradmin'      => 'ZfcUserAdmin\Controller\UserAdminController',
         ),
     ),
+
     'router' => array(
         'routes' => array(
             'zfcadmin' => array(

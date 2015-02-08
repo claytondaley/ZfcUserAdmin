@@ -6,22 +6,29 @@
  * Time: 1:03 PM
  */
 
-namespace ZfcUserAdmin\Factory\Form;
+namespace ZfcUserAdmin\FormElementManagerFactory\Form;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfcUser\Form\RegisterFilter;
-use ZfcUserAdmin\Form\EditUser;
+use ZfcUserAdmin\Form;
 use ZfcUserAdmin\Validator\NoRecordExistsEdit;
 
-class EditUserFactory implements FactoryInterface {
+class EditUser implements FactoryInterface {
 
-    public function createService(ServiceLocatorInterface $serviceLocator) {
+    public function createService(ServiceLocatorInterface $formElementManager) {
+        $serviceLocator = $formElementManager->getServiceLocator();
+
         /** @var $zfcUserOptions \ZfcUser\Options\UserServiceOptionsInterface */
         $zfcUserOptions = $serviceLocator->get('zfcuser_module_options');
         /** @var $zfcUserAdminOptions \ZfcUserAdmin\Options\ModuleOptions */
         $zfcUserAdminOptions = $serviceLocator->get('zfcuseradmin_module_options');
-        $form = new EditUser(null, $zfcUserAdminOptions, $zfcUserOptions, $serviceLocator);
+        $form = new Form\EditUser(null, $zfcUserAdminOptions, $zfcUserOptions, $serviceLocator);
+        // Inject the FormElementManager to support custom FormElements
+        $form->getFormFactory()->setFormElementManager($formElementManager);
+
+        $form->setHydrator($serviceLocator->get('zfcuser_user_hydrator'));
+
         $filter = new RegisterFilter(
             new NoRecordExistsEdit(array(
                 'mapper' => $serviceLocator->get('zfcuser_user_mapper'),

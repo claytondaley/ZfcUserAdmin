@@ -12,10 +12,39 @@
             "email": "daniel@eye4web.dk"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/claytondaley/Component_ZendForm"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/claytondaley/ZendTable"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/claytondaley/ZfcUser"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
-        "zf-commons/zfc-user": ">=0.1.1",
-        "zf-commons/zfc-admin": ">=0.1.1"
+        "zf-commons/zfc-user": "dev-table-1.x as 1.x-dev",
+        "zf-commons/zfc-admin": ">=0.1.1",
+        "claytondaley/zend-table": "2.3.*-dev"
+    },
+    "require-dev": {
+        "zendframework/zend-captcha": "2.3.*",
+        "zendframework/zend-code": "2.3.*",
+        "zendframework/zend-eventmanager": "2.3.*",
+        "zendframework/zend-filter": "2.3.*",
+        "zendframework/zend-i18n": "2.3.*",
+        "zendframework/zend-paginator": "2.3.*",
+        "zendframework/zend-servicemanager": "2.3.*",
+        "zendframework/zend-validator": "2.3.*",
+        "zendframework/zend-view": "2.3.*",
+        "zendframework/zendservice-recaptcha": "*"
     },
     "autoload": {
         "psr-0": {

@@ -23,8 +23,11 @@ class EditUser extends Base
         $this->setUserEditOptions($options);
         $this->setServiceManager($serviceManager);
         parent::__construct($name, $registerOptions);
-        // ZfcUser should have setHydrator() which we replace or extend
-        $this->setHydrator($serviceManager->get('zfcuser_user_hydrator'));
+    }
+
+    public function init()
+    {
+        parent::init();
 
         // Render using ZfcAdmin form class
         $this->setAttribute('class', 'zend_form');
@@ -72,8 +75,6 @@ class EditUser extends Base
         }
 
         $this->get('submit')->setLabel('Save')->setValue('Save');
-
-        $this->getEventManager()->trigger('init', $this);
     }
 
     protected function getAccessorName($property, $set = true)
