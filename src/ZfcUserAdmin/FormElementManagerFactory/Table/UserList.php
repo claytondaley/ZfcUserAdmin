@@ -10,12 +10,13 @@ namespace ZfcUserAdmin\FormElementManagerFactory\Table;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Table\StaticRow;
+use DaleyTable\StaticRow;
 use ZfcUserAdmin\Table;
 
 class UserList implements FactoryInterface {
 
     function createService(ServiceLocatorInterface $formElementManager) {
+        /** @var ServiceLocatorInterface $serviceLocator */
         $serviceLocator = $formElementManager->getServiceLocator();
 
         /** @var $zfcUserAdminOptions \ZfcUserAdmin\Options\ModuleOptions */

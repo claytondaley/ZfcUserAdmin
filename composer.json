@@ -32,7 +32,7 @@
         "php": ">=5.3.3",
         "zf-commons/zfc-user": "dev-table-1.x as 1.x-dev",
         "zf-commons/zfc-admin": ">=0.1.1",
-        "claytondaley/zend-table": "2.3.*-dev"
+        "claytondaley/zend-table": "dev-master"
     },
     "require-dev": {
         "zendframework/zend-captcha": "2.3.*",

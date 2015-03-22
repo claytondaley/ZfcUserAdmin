@@ -8,9 +8,9 @@
 
 namespace ZfcUserAdmin\Table;
 
-use Zend\Table\KeyedCollection;
-use Zend\Table\Table;
-use Zend\Table\RowInterface;
+use DaleyTable\KeyedCollection;
+use DaleyTable\Table;
+use DaleyTable\RowInterface;
 use ZfcUserAdmin\Options\UserListOptionsInterface;
 
 class UserList extends Table
@@ -25,6 +25,8 @@ class UserList extends Table
 
     public function init()
     {
+        $this->setAttribute('class', 'table table-condensed');
+
         foreach ($this->getUserListOptions()->getUserListElements() as $label => $name) {
             $this->add(
                 array(
