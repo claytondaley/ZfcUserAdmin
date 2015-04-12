@@ -31,7 +31,7 @@ return array(
         ),
         'delegators' => array(
             'form_element' => array(
-                'ZfcUserAdmin\Delegator\FormElementLinkSupport',
+                'DaleyTable\Delegator\FormElementLinkSupport',
             ),
         ),
     ),
