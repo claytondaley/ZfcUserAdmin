@@ -24,8 +24,6 @@ class CreateUser implements FactoryInterface {
         /** @var $zfcUserAdminOptions \ZfcUserAdmin\Options\ModuleOptions */
         $zfcUserAdminOptions = $serviceLocator->get('zfcuseradmin_module_options');
         $form = new Form\CreateUser(null, $zfcUserAdminOptions, $zfcUserOptions, $serviceLocator);
-        // Inject the FormElementManager to support custom FormElements
-        $form->getFormFactory()->setFormElementManager($formElementManager);
 
         $form->setHydrator($serviceLocator->get('zfcuser_user_hydrator'));
 

@@ -12,8 +12,12 @@
             "email": "daniel@eye4web.dk"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "extra": {
+      "branch-alias": {
+        "dev-develop": "1.x-dev",
+        "dev-table": "1.0"
+      }
+    },
     "repositories": [
         {
             "type": "vcs",
@@ -28,11 +32,13 @@
             "url": "https://github.com/claytondaley/ZfcUser"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=5.3.3",
-        "zf-commons/zfc-user": "dev-table-1.x as 1.x-dev",
+        "zf-commons/zfc-user": "1.9.*",
         "zf-commons/zfc-admin": ">=0.1.1",
-        "claytondaley/zend-table": "dev-master"
+        "claytondaley/zend-table": "2.0.*"
     },
     "require-dev": {
         "zendframework/zend-captcha": "2.3.*",
