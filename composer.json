@@ -14,11 +14,14 @@
     ],
     "extra": {
       "branch-alias": {
-        "dev-develop": "1.x-dev",
-        "dev-table": "1.0"
+        "dev-table": "1.x-dev"
       }
     },
     "repositories": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/claytondaley/zf2"
+        },
         {
             "type": "vcs",
             "url": "https://github.com/claytondaley/Component_ZendForm"
@@ -32,25 +35,12 @@
             "url": "https://github.com/claytondaley/ZfcUser"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
+        "zendframework/zendframework": "dev-table as 2.4",
         "php": ">=5.3.3",
         "zf-commons/zfc-user": "1.9.*",
         "zf-commons/zfc-admin": ">=0.1.1",
-        "claytondaley/zend-table": "2.0.*"
-    },
-    "require-dev": {
-        "zendframework/zend-captcha": "2.3.*",
-        "zendframework/zend-code": "2.3.*",
-        "zendframework/zend-eventmanager": "2.3.*",
-        "zendframework/zend-filter": "2.3.*",
-        "zendframework/zend-i18n": "2.3.*",
-        "zendframework/zend-paginator": "2.3.*",
-        "zendframework/zend-servicemanager": "2.3.*",
-        "zendframework/zend-validator": "2.3.*",
-        "zendframework/zend-view": "2.3.*",
-        "zendframework/zendservice-recaptcha": "*"
+        "claytondaley/zend-table": "2.*"
     },
     "autoload": {
         "psr-0": {
